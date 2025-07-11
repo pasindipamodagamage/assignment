@@ -1,6 +1,7 @@
 import express, {Express, Request, Response} from "express";
 import productRoutes from "./routes/product.routes";
 import cors from "cors";
+import contactRoutes from "./routes/contactDetail.routes";
 
 // 1. Initialize the express app
 const app: Express = express();
@@ -27,6 +28,7 @@ const corsOptions = {
 app.use(cors(corsOptions)); // Enable/Allow CORS according to defined options
 
 app.use("/api/products", productRoutes)
+app.use("/api/contacts", contactRoutes);
 
 // Expert the app to use outside (in index.ts)
 export default app;

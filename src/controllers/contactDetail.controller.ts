@@ -1,91 +1,66 @@
-import {Request,Response} from "express";
-import * as productService from '../service/product.service'
+import { Request, Response } from "express";
+import * as contactDetailService from "../service/contactDetail.service";
 
-export const getAllProducts = (req:Request,res:Response) => {
-    try{
-        const product = productService.getAllProducts();
-        res.status(200).json(product)
-    }catch (error){
+export const getAllContactDetails = (req: Request, res: Response) => {
+    try {
+        const contacts = contactDetailService.getAllContactDetails();
+        res.status(200).json(contacts);
+    } catch (error) {
         console.error(error);
-        res.status(500).json({
-            error: 'Something went wrong!!'
-        });
+        res.status(500).json({ error: "Something went wrong!!" });
     }
-}
+};
 
-export const saveProduct = (req:Request,res:Response) => {
-    try{
-        const newProduct = req.body;
-        const validationError = productService.validateProduct(newProduct);
+export const saveContactDetail = (req: Request, res: Response) => {
+    try {
+        const newContact = req.body;
+        const validationError = contactDetailService.validateContactDetail(newContact);
 
-        if(validationError){
-            res.status(400).json({error : validationError})
-            return
+        if (validationError) {
+            res.status(400).json({ error: validationError });
+            return;
         }
-        const saveProduct = productService.saveProduct(newProduct)
-        res.status(201).json(saveProduct);
 
-    }catch (error){
+        const savedContact = contactDetailService.saveContactDetail(newContact);
+        res.status(201).json(savedContact);
+    } catch (error) {
         console.error(error);
-        res.status(500).json({
-            error: 'Something went wrong!!'
-        });
+        res.status(500).json({ error: "Something went wrong!!" });
     }
-}
+};
 
-export const getProduct = (req:Request,res:Response) => {
-    const productId = parseInt(req.params.id);
-    if(isNaN(productId)){
-        res.status(400).json({
-            error: 'invalid product id'
-        });
-        return;
-    }
-    const product = productService.getProductById(productId);
-    if(!product){
-        res.status(404).json({
-            error: 'Product not found'
-        })
-        return;
-    }
-    res.status(200).json(product)
-}
+export const getContactDetail = (req: Request, res: Response) => {
+    const email = req.params.email;
 
-export const UpdateProduct = (req:Request,res:Response) => {
-    const productId = parseInt(req.params.id);
-    if(isNaN(productId)){
-        res.status(400).json({
-            error: 'invalid product id'
-        });
+    if (!email) {
+        res.status(400).json({ error: "Invalid email" });
         return;
     }
-    const  updatedData = req.body;
-    const updatedProduct = productService.updateProduct(productId,updatedData);
-    if (!updatedProduct){
-        res.status(404).json({
-            error:'product not found'
-        });
-        return;
-    }
-    res.status(200).json(updatedProduct)
-}
 
-export const DeleteProduct = (req:Request,res:Response) => {
-    const productId = parseInt(req.params.id);
-    if(isNaN(productId)){
-        res.status(400).json({
-            error: 'invalid product id'
-        });
+    const contact = contactDetailService.getContactDetailByEmail(email);
+
+    if (!contact) {
+        res.status(404).json({ error: "Contact not found" });
         return;
     }
-    const deleteProduct =  productService.deleteProduct(productId)
-    if (!deleteProduct){
-        res.status(404).json({
-            error:'Product not found'
-        });
+
+    res.status(200).json(contact);
+};
+
+export const deleteContactDetail = (req: Request, res: Response) => {
+    const email = req.params.email;
+
+    if (!email) {
+        res.status(400).json({ error: "Invalid email" });
         return;
     }
-    res.status(200).json({
-        message:'Product deleted successfully'
-    })
-}
+
+    const deleted = contactDetailService.deleteContactDetail(email);
+
+    if (!deleted) {
+        res.status(404).json({ error: "Contact not found" });
+        return;
+    }
+
+    res.status(200).json({ message: "Contact deleted successfully" });
+};
