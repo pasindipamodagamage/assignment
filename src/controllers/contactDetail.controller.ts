@@ -29,38 +29,38 @@ export const saveContactDetail = (req: Request, res: Response) => {
     }
 };
 
-export const getContactDetail = (req: Request, res: Response) => {
-    const email = req.params.email;
-
-    if (!email) {
-        res.status(400).json({ error: "Invalid email" });
-        return;
-    }
-
-    const contact = contactDetailService.getContactDetailByEmail(email);
-
-    if (!contact) {
-        res.status(404).json({ error: "Contact not found" });
-        return;
-    }
-
-    res.status(200).json(contact);
-};
-
-export const deleteContactDetail = (req: Request, res: Response) => {
-    const email = req.params.email;
-
-    if (!email) {
-        res.status(400).json({ error: "Invalid email" });
-        return;
-    }
-
-    const deleted = contactDetailService.deleteContactDetail(email);
-
-    if (!deleted) {
-        res.status(404).json({ error: "Contact not found" });
-        return;
-    }
-
-    res.status(200).json({ message: "Contact deleted successfully" });
-};
+// export const getContactDetail = (req: Request, res: Response) => {
+//     const email = req.params.email;
+//
+//     if (!email) {
+//         res.status(400).json({ error: "Invalid email" });
+//         return;
+//     }
+//
+//     const contact = contactDetailService.getContactDetailByEmail(email);
+//
+//     if (!contact) {
+//         res.status(404).json({ error: "Contact not found" });
+//         return;
+//     }
+//
+//     res.status(200).json(contact);
+// };
+//
+// export const deleteContactDetail = (req: Request, res: Response) => {
+//     const email = req.params.email;
+//
+//     if (!email) {
+//         res.status(400).json({ error: "Invalid email" });
+//         return;
+//     }
+//
+//     const deleted = contactDetailService.deleteContactDetail(email);
+//
+//     if (!deleted) {
+//         res.status(404).json({ error: "Contact not found" });
+//         return;
+//     }
+//
+//     res.status(200).json({ message: "Contact deleted successfully" });
+// };

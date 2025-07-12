@@ -10,7 +10,7 @@ const contactRouter: Router = Router();
 
 contactRouter.get("/all", getAllContactDetails);
 contactRouter.post("/save", saveContactDetail);
-contactRouter.get("/:email", getContactDetail);
-contactRouter.delete("/delete/:email", deleteContactDetail);
+// contactRouter.get("/:email", getContactDetail);
+// contactRouter.delete("/delete/:email", deleteContactDetail);
 
 export default contactRouter;
